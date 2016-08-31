@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ModalInstance } from './modal-instance';
+import { ModalComponent } from './modal';
 
 @Component({
   selector: 'modal-body',
@@ -10,5 +10,5 @@ import { ModalInstance } from './modal-instance';
   `
 })
 export class ModalBodyComponent {
-  constructor(private _modal: ModalInstance) {}
+  constructor(private _modal: ModalComponent) {}
 }

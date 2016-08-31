@@ -1,48 +1,48 @@
-import { 
-  Component, 
-  OnDestroy, 
+import {
+  Component,
+  OnDestroy,
   Input,
   Output,
   EventEmitter,
   ElementRef,
-  HostBinding
+  HostBinding,
+  ViewEncapsulation
 } from '@angular/core';
-import { ModalInstance, ModalResult } from './modal-instance';
+import { ModalInstance, ModalResult, ModalSize } from './modal-instance';
+
 
 @Component({
   selector: 'modal',
-  template: `
-    <div class="modal-dialog"
-         [ngClass]="{ 'modal-sm': isSmall(), 'modal-lg': isLarge() }">
-      <div class="modal-content">
-        <ng-content></ng-content>
-      </div>     
-    </div> 
-  `,
+  encapsulation: ViewEncapsulation.None,
   host: {
     'class': 'modal',
     'role': 'dialog',
     'tabindex': '-1'
-  }
+  },
+  template:`
+    <div class="modal-dialog" [ngClass]="{ 'modal-sm': _isSmall(), 'modal-lg': _isLarge() }">
+      <div class="modal-content">
+        <ng-content></ng-content>
+      </div>     
+    </div>
+  `
 })
 export class ModalComponent implements OnDestroy {
-  
+
   private _overrideSize: string = null;
-  
+
   instance: ModalInstance;
   visible: boolean = false;
-  
-  
-  // `size` value being passed in from cmp.
-  @Input() size: string;
+
   @Input() animation: boolean = true;
-  @Input() keyboard: boolean = true;
   @Input() backdrop: string|boolean = true;
-  
-  @Output() onDismiss: EventEmitter<any> = new EventEmitter(false);
+  @Input() keyboard: boolean = true;
+  @Input() size: string;
+
   @Output() onOpen: EventEmitter<any> = new EventEmitter(false);
+  @Output() onDismiss: EventEmitter<any> = new EventEmitter(false);
   @Output() onClose: EventEmitter<any> = new EventEmitter(false);
-  
+
   @HostBinding('class.fade') get fadeClass(): boolean {
     return this.animation;
   }
@@ -52,73 +52,61 @@ export class ModalComponent implements OnDestroy {
   @HostBinding('attr.data-backdrop') get dataBackdropAttr(): string|boolean {
     return this.backdrop;
   }
+
   constructor(private _element: ElementRef) {
-    // 1. Instantiate a new ModalInstance by passing current element reference.
+
+    // Instantiate a new modal instance by passing current `ElementRef`
     this.instance = new ModalInstance(this._element);
-    
-    // 2. Subscribe to `hidden` event stream.
-    this.instance.hidden.subscribe(result => {
-      // rest instance visibility
-      this.visible = this.instance.visible;
-      if (result === ModalResult.Dismiss) {
-        // emit `dismiss` event to outside of this component so others can do stuffs as well.
-        this.onDismiss.emit(undefined);
-      }
+
+    // Subscribe to `shown` event stream and emits `onOpen` event
+    this.instance.shown.subscribe(() => {
+      this.onOpen.emit(null);
     });
 
-    // 3. Subscribe to `shown` event stream
-    this.instance.shown.subscribe(() => {
-      // emit `onOpen` event to outside world.
-      this.onOpen.emit(undefined);
+    // Subscribe to `hidden` event stream and emits `onDismiss` event
+    this.instance.hidden.subscribe(result => {
+      this.visible = this.instance.visible;
+      if (result === ModalResult.Dismiss) {
+        this.onDismiss.emit(null);
+      }
     });
-    
   }
-  ngOnDestroy(): void {
+
+  ngOnDestroy(): any {
     return this.instance && this.instance.destroy();
   }
-  
+
   public routerCanDeactivate(): any {
     return this.ngOnDestroy();
   }
-  
-  public open(size: string): Promise<void> {
-    if (ModalSize.validSize(size)) {
-      this._overrideSize = size;
-    }
+
+  public open(size?: string): Promise<any> {
+    if (ModalSize.validSize(size)) this._overrideSize = size;
     return this.instance.open().then(() => {
       this.visible = this.instance.visible;
     });
   }
-  
-  public close(): Promise<void> {
+
+  public close(): Promise<any> {
     return this.instance.close().then(() => {
-      // emit `onClose` event stream
-      this.onClose.emit(undefined)
-    })
+      // emit `onClose` event
+      this.onClose.emit(null);
+    });
   }
-  
-  public dismiss(): Promise<void> {
+
+  public dismiss(): Promise<any> {
     return this.instance.dismiss();
   }
-  
-  private isSmall(): boolean {
+
+  private _isSmall(): boolean {
     return this._overrideSize !== ModalSize.Large
       && this.size === ModalSize.Small
       || this._overrideSize === ModalSize.Small;
   }
 
-  private isLarge(): boolean {
+  private _isLarge(): boolean {
     return this._overrideSize !== ModalSize.Small
       && this.size === ModalSize.Large
       || this._overrideSize === ModalSize.Large;
-  }
-}
-
-export class ModalSize {
-  static Small = 'sm';
-  static Large = 'lg';
-  
-  static validSize(size: string) {
-    return size && (size === ModalSize.Small || size === ModalSize.Large);
   }
 }

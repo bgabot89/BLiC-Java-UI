@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs/Observable';
+
 function booleanOrValue(value) {
   if (value === 'true')
     return true;

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ModalInstance } from './modal-instance';
+import { ModalComponent } from './modal';
 
 @Component({
   selector: 'modal-footer',
@@ -22,5 +22,5 @@ import { ModalInstance } from './modal-instance';
 })
 export class ModalFooterComponent {
   @Input('show-default-buttons') showDefaultButtons: boolean = false;
-  constructor(private _modal: ModalInstance) {}
+  constructor(private _modal: ModalComponent) {}
 }

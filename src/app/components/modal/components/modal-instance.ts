@@ -1,27 +1,24 @@
-import { ElementRef } from '@angular/core';
+import { ElementRef, Injectable } from '@angular/core';
 import { toPromise,  booleanOrValue } from './utils';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/observable/fromEvent';
+
 declare var jQuery: any;
 
-// function booleanOrValue(value) {
-//   if (value === 'true')
-//     return true;
-//   else if (value === 'false')
-//     return false;
-//   return value;
-// }
-//
-// function toPromise<T>(observable: Observable<T>): Promise<T> {
-//   return new Promise((resolve, reject) => {
-//     observable.subscribe(next => {
-//       resolve(next);
-//     }, error => {
-//       reject(error);
-//     });
-//   });
-// }
+export enum ModalResult {
+  None,
+  Close,
+  Dismiss
+}
+
+export class ModalSize {
+  static Small = 'sm';
+  static Large = 'lg';
+
+  static validSize(size: string): boolean {
+    return size && (size === ModalSize.Small || size === ModalSize.Large);
+  }
+}
+
 
 export class ModalInstance {
   
@@ -54,7 +51,7 @@ export class ModalInstance {
   
   dismiss(): Promise<any> {
     // set current result `Dismiss`
-    this.reuslt = ModalResult.Dismiss;
+    this.result = ModalResult.Dismiss;
     // then return a promise
     return this._hide();
   }
@@ -65,8 +62,7 @@ export class ModalInstance {
     this._$modal.modal();
     return promise;
   }
-  
-  
+
   destroy(): Promise<any> {
     return this._hide().then(() => {
       if (this._$modal) {
@@ -116,14 +112,5 @@ export class ModalInstance {
         
         return result;
       });
-    
   }
 }
-
-
-export enum ModalResult {
-  None,
-  Close,
-  Dismiss
-}
-
