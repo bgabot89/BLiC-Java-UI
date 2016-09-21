@@ -1,10 +1,11 @@
-<!doctype HTML>
+<!DOCTYPE html>
 <html lang="en">
 <head>
+  <base href="/">
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="description" content="Broken links checker">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <title>Broken links checker</title>
   <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Amatic+SC">
   <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400">
@@ -12,51 +13,11 @@
   <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.js"></script>
-  <link type="text/css" rel="stylesheet" href="styles.min.css">
-  <!-- IE required polyfills (from CDN), in this exact order -->
-  <!-- inject:css -->
-  <!-- endinject -->
 </head>
+
 <body>
+  <%= require('raw!./app/assets/icons/ic_close_24px.svg') %>
+  <app>Loading App...</app>
 
-<app>Loading App...</app>
-
-<script>
-  function __moduleName() {}
-</script>
-
-<script>
-  // function.name (all IE)
-  // Remove once https://github.com/angular/angular/issues/6501 is fixed.
-  /*! @source http://stackoverflow.com/questions/6903762/function-name-not-supported-in-ie*/
-  if (!Object.hasOwnProperty('name')) {
-    Object.defineProperty(Function.prototype, 'name', {
-      get: function() {
-        var matches = this.toString().match(/^\s*function\s*(\S*)\s*\(/);
-        var name = matches && matches.length > 1 ? matches[1] : "";
-        // For better performance only parse once, and then cache the
-        // result through a new accessor for repeated access.
-        Object.defineProperty(this, 'name', {value: name});
-        return name;
-      }
-    });
-  }
-</script>
-
-
-<!-- shims:js -->
-<!-- endinject -->
-
-<!-- libs:js -->
-<!-- endinject -->
-
-<% if (ENV === 'prod') { %>
-<script src="bundle.min.js"></script>
-<% } %>
-
-<% if (ENV === 'dev') { %>
-<script type="text/javascript" src="system.config.js"></script>
-<script type="text/javascript">System.import('app').then(null, console.error.bind(console));</script>
-<% } %>
 </body>
 </html>

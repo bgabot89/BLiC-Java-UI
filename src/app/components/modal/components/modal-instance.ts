@@ -1,4 +1,4 @@
-import { ElementRef, Injectable } from '@angular/core';
+import { ElementRef } from '@angular/core';
 import { toPromise,  booleanOrValue } from './utils';
 import { Observable } from 'rxjs/Observable';
 

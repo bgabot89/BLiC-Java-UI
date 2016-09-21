@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-
 const BASE_URL = 'https://powerful-spire-40053.herokuapp.com';
 const makeURL = (query): string => `${BASE_URL}/check?url=${query}`;
 

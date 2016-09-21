@@ -1,9 +1,11 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { ModalComponent } from './modal';
+import { IconComponent } from '../../icon';
 
 @Component({
   selector: 'modal-header',
   encapsulation: ViewEncapsulation.None,
+  directives: [IconComponent],
   template: `
   <div class="modal-header">
     <button *ngIf="showClose"
@@ -11,21 +13,15 @@ import { ModalComponent } from './modal';
             class="close"
             data-dismiss="modal"
             aria-label="Close"
-            (click)="_modal.dismiss()">           
-      <img class="close-icon" src="app/assets/icons/ic_close_24px.svg" alt="close icon">
+            (click)="_modal.dismiss()">                
+      <icon [name]="'close-icon'"></icon>
     </button>
     <ng-content></ng-content>
   </div>
   `,
-  styles: [`
-  .modal-header .modal-title {
-    font-size: 20px;
-    color: #636363;
-  }
-  .modal-header .close-icon {
-    margin-top: 5px;
-  }
-  `]
+  styles: [
+    require('./modal-header.scss')
+  ]
 })
 export class ModalHeaderComponent {
   @Input('show-close') showClose: boolean = false;
