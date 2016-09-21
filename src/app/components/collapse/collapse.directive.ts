@@ -1,13 +1,4 @@
-import {
-  Directive,
-  OnInit,
-  ElementRef,
-  Input,
-  Output,
-  HostBinding,
-  Renderer,
-  EventEmitter
-} from '@angular/core';
+import { Directive, OnInit, ElementRef, Input, Output, HostBinding, Renderer, EventEmitter } from '@angular/core';
 
 @Directive({ selector: '[collapse]' })
 export class CollapseDirective implements OnInit {
