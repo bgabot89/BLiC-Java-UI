@@ -20,7 +20,10 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
       <div class="sk-circle12 sk-child"></div>
     </div>
   </div>
-  `
+  `,
+  styles:[
+    require('./spinner.scss')
+  ]
 })
 export class SpinnerComponent implements OnInit, OnDestroy {
   private _visible: boolean = false;

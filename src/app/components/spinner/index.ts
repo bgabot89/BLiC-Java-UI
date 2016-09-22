@@ -1,1 +1,1 @@
-export * from './spinner';
+export { SpinnerComponent } from './spinner';
