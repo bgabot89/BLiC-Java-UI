@@ -1,15 +1,5 @@
-import {
-  Component,
-  OnDestroy,
-  Input,
-  Output,
-  EventEmitter,
-  ElementRef,
-  HostBinding,
-  ViewEncapsulation
-} from '@angular/core';
+import { Component, OnDestroy, Input, Output, EventEmitter, ElementRef, HostBinding, ViewEncapsulation } from '@angular/core';
 import { ModalInstance, ModalResult, ModalSize } from './modal-instance';
-
 
 @Component({
   selector: 'modal',
@@ -25,7 +15,10 @@ import { ModalInstance, ModalResult, ModalSize } from './modal-instance';
         <ng-content></ng-content>
       </div>     
     </div>
-  `
+  `,
+  styles:[
+    require('./modal.scss')
+  ]
 })
 export class ModalComponent implements OnDestroy {
 
@@ -54,7 +47,6 @@ export class ModalComponent implements OnDestroy {
   }
 
   constructor(private _element: ElementRef) {
-
     // Instantiate a new modal instance by passing current `ElementRef`
     this.instance = new ModalInstance(this._element);
 
@@ -89,7 +81,6 @@ export class ModalComponent implements OnDestroy {
 
   public close(): Promise<any> {
     return this.instance.close().then(() => {
-      // emit `onClose` event
       this.onClose.emit(null);
     });
   }

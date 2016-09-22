@@ -1,11 +1,9 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { ModalComponent } from './modal';
-import { IconComponent } from '../../icon';
 
 @Component({
   selector: 'modal-header',
   encapsulation: ViewEncapsulation.None,
-  directives: [IconComponent],
   template: `
   <div class="modal-header">
     <button *ngIf="showClose"

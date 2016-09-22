@@ -1,9 +1,7 @@
 import { Directive, ElementRef } from '@angular/core';
 import { ModalComponent } from '../components/modal';
 
-@Directive({
-  selector: '[autofocus]'
-})
+@Directive({ selector: '[autofocus]' })
 export class AutofocusDirective {
   constructor(private _el: ElementRef, 
               private _modal: ModalComponent) {
