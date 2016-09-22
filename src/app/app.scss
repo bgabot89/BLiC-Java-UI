@@ -1,0 +1,183 @@
+app {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 10;
+
+  h1 {
+    font-family: 'Amatic SC', cursive;
+    position: fixed;
+    font-size: 56px;
+    z-index: 100;
+    top: 20%;
+    left: 50%;
+    width: 100%;
+    margin: 0;
+    font-weight: 400;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    color: #fff;
+    text-align: center;
+  }
+
+  form.search {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 30;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+  }
+
+  form.search .input-container {
+    position: relative;
+    display: block;
+    vertical-align: middle;
+    padding: 0;
+    margin: 0;
+    min-width: 450px;
+  }
+  input[type="url"].search-input {
+    display: block;
+    width: 100%;
+    height: 60px;
+    border: none;
+    outline: none;
+    z-index: 30;
+    -webkit-animation: searchInputIn 1s 0.1s ease 1 forwards;
+    animation: searchInputIn 1s 0.1s ease 1 forwards;
+    text-align: center;
+    /*color: #039BE5;*/
+    color: #3949AB;
+    -webkit-transition: height 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), color 0.3s ease;
+    transition: height 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), color 0.3s ease;
+  }
+  input[type="url"].search-input:focus {
+    outline: none;
+  }
+  .input-border {
+    position: absolute;
+    display: block;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    height: 4px;
+    background: transparent;
+    overflow: hidden;
+  }
+  .input-border:before,
+  .input-border:after {
+    content: '';
+    height: 3px;
+    width: 0;
+    bottom: 0;
+    position: absolute;
+    /*background: #039BE5;*/
+    background: #3949AB;
+    transition: 0.3s ease all;
+    -moz-transition: 0.3s ease all;
+    -webkit-transition: 0.3s ease all;
+  }
+  .input-border:before {
+    left:50%;
+  }
+  .input-border:after {
+    right:50%;
+  }
+  /* active state */
+  input[type="url"].search-input:focus ~ .input-border:before,
+  input[type="url"].search-input:focus ~ .input-border:after {
+    width:50%;
+  }
+
+  button.close {
+    outline: none;
+  }
+
+  button.submit-button {
+    display: block;
+    width: 60px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: transparent;
+    padding: 20px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    /*color: #039BE5;*/
+    color: #3949AB;
+  }
+  button.submit-button [class^="fa"],
+  button.submit-button [class*=" fa-"] {
+    font-size: 20px;
+    display: inline-block;
+    fill: currentColor;
+  }
+  .footer {
+    position: fixed;
+    z-index: 100;
+    bottom: 10px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    color: #fff;
+    text-align: center;
+    line-height: 28px;
+    font-size: 13px;
+  }
+  .footer a {
+    text-decoration: underline;
+    color: inherit;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .footer [class^="fa"],
+  .footer [class*=" fa-"] {
+    margin: 0 1px;
+    height: 15px;
+    width: 15px;
+    display: inline-block;
+    fill: currentColor;
+    vertical-align: sub;
+    overflow: hidden;
+    font-size: 15px;
+  }
+
+  @-webkit-keyframes searchInputIn {
+    to {
+      transform: scale(1);
+      box-shadow: 0 9px 20px rgba(0,0,0,0.2), 0 6px 6px rgba(0,0,0,0.23);
+    }
+  }
+  @-moz-keyframes searchInputIn {
+    to {
+      transform: scale(1);
+      box-shadow: 0 9px 20px rgba(0,0,0,0.2), 0 6px 6px rgba(0,0,0,0.23);
+    }
+  }
+  @keyframes searchInputIn {
+    to {
+      transform: scale(1);
+      box-shadow: 0 9px 20px rgba(0,0,0,0.2), 0 6px 6px rgba(0,0,0,0.23);
+    }
+  }
+  @media (max-width: 480px) {
+    form.search .input-container {
+      min-width: 400px;
+    }
+  }
+  @media (max-width: 415px) {
+    form.search .input-container {
+      min-width: 320px;
+    }
+  }
+  @media (max-width: 350px) {
+    form.search .input-container {
+      min-width: 260px;
+    }
+  }
+
+}

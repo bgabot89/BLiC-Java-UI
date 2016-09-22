@@ -1,0 +1,77 @@
+<h1 class="title">Broken links checker</h1>
+
+<form class="search" [formGroup]="searchForm" #f="ngForm" (ngSubmit)="search(f.value)" novalidate>
+  <div class="input-container">
+    <input type="url"
+           name="url"
+           class="search-input"
+           placeholder="Enter a url here and press enter"
+           formControlName="url"
+    >
+    <button type="submit" class="submit-button" [disabled]="!f.valid">
+      <i *ngIf="!isLoading" class="fa fa-search" aria-hidden="true"></i>
+      <spinner></spinner>
+    </button>
+    <div class="input-border"></div>
+  </div>
+</form>
+
+<div class="footer">
+  <i class="fa fa-code" aria-hidden="true"></i>
+
+  by <a href="https://github.com/jaykan" target="blank">Jay Kan</a> with
+
+  <i class="fa fa-heart" aria-hidden="true"></i>
+  <div>
+    Fork on
+    <a href="https://github.com/codeforsanjose/BLiC-Java-UI" target="blank">
+      <i class="fa fa-github" aria-hidden="true"></i>
+    </a>
+  </div>
+</div>
+
+<modal (onClose)="reset()" (onDismiss)="reset()" #resultModal>
+  <modal-header [show-close]="true">
+    <h4 class="modal-title">Search Result <small>{{ searchResults?.total }}</small></h4>
+  </modal-header>
+
+  <modal-body>
+    <template ngFor [ngForOf]="searchResults" let-t="$implicit">
+      <div class="margin-bottom-20" (click)="collapse(t);">
+        <header class="result-table-header" [ngClass]="{'error': t.key === 'Errors', 'success': t.key === 'Success', 'others': t.key === 'Others'}">
+          <h5>{{ t.key }} <small> ({{ t.value.length }})</small></h5>
+          <i class="fa" [ngClass]="{'fa-angle-down': !t.isCollapsed, 'fa-angle-up': t.isCollapsed}" aria-hidden="true"></i>
+        </header>
+
+        <section [collapse]="t.isCollapsed">
+          <header class="result-table-headline">
+            <span class="url">URL</span>
+            <span class="status">STATUS</span>
+            <span class="linked-pages">LINKED PAGES</span>
+          </header>
+
+          <div class="result-table-body">
+            <section *ngFor="let record of t.value; let i = index;" [ngClass]="{'error-border': t.key === 'Errors', 'success-border': t.key === 'Success', 'others-border': t.key === 'Others'}">
+              <span style="width:40%;display: inline-block;font-size:11px;overflow-wrap: break-word;">
+                {{ record.url }}
+              </span>
+              <span style="width:12%;display: inline-block;font-size:11px;overflow-wrap: break-word;padding: 0 8px;">
+                {{ record.status }}
+              </span>
+
+              <span style="width:45%;display: inline-block;font-size:11px;overflow-wrap: break-word;">
+                <section *ngFor="let link of record.linkPages">
+                  <span>{{ link }}</span> <br>
+                </section>
+              </span>
+            </section>
+          </div>
+        </section>
+      </div>
+    </template>
+  </modal-body>
+
+  <modal-footer>
+    <button type="button" class="btn btn-default" data-dismiss="modal" (click)="resultModal.close()">Done</button>
+  </modal-footer>
+</modal>
