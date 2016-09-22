@@ -1,9 +1,5 @@
-// import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { enableProdMode, Type } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { disableDeprecatedForms, provideForms } from '@angular/forms';
-import { HTTP_PROVIDERS } from '@angular/http';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { enableProdMode } from '@angular/core';
 
 // enable prod for faster renders
 if (process.env.NODE_ENV === 'production') {
@@ -13,15 +9,18 @@ if (process.env.NODE_ENV === 'production') {
 // import common styles
 import './app/assets/styles/styles.scss';
 
-// import app component
-import { AppComponent } from './app/';
+// import app module
+import { AppModule } from './app';
 
-bootstrap(<Type>AppComponent, [
-  disableDeprecatedForms(),
-  provideForms(),
-  HTTP_PROVIDERS,
-  { provide: LocationStrategy, useClass: HashLocationStrategy }
-]).catch(err => console.error(err));
+export function main() {
+  return platformBrowserDynamic().bootstrapModule(AppModule);
+}
+
+if (document.readyState === 'complete') {
+  main();
+} else {
+  document.addEventListener('DOMContentLoaded', main);
+}
 
 
 
